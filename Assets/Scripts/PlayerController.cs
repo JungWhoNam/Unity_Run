@@ -11,12 +11,14 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false; // 사망 상태
 
     private Rigidbody2D playerRigidbody; // 사용할 리지드바디 컴포넌트
+    private Animator animator; // 사용할 애니메이터 컴포넌트
     private AudioSource playerAudio; // 사용할 오디오 소스 컴포넌트
 
     private void Start()
     {
         // 게임 오브젝트로부터 사용할 컴포넌트들을 가져와 변수에 할당
         playerRigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
     }
 
@@ -46,10 +48,16 @@ public class PlayerController : MonoBehaviour
             // 현재 속도를 절반으로 변경
             playerRigidbody.linearVelocity = playerRigidbody.linearVelocity * 0.5f;
         }
+
+        // 에니메이터의 Grounded 파라미터를 isGrounded 값으로 갱신
+        animator.SetBool("Grounded", isGrounded); 
     }
 
     private void Die()
     {
+        // 애니메이터 Die 트리거 파타미터를 셋
+        animator.SetTrigger("Die");
+
         // 오디오 소스에 할당된 오디오 클립을 deathClip으로 변경
         playerAudio.clip = deathClip;
         // 사망 효과음 재생
