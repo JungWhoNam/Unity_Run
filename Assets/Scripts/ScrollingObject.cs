@@ -6,8 +6,7 @@ public class ScrollingObject : MonoBehaviour {
 
     private void Update()
     {
-        GameManager manager = FindFirstObjectByType<GameManager>();
-        if (manager != null && !manager.isGameover)
+        if (!GameManager.instance.isGameover)
         {
             // 초당 speed의 속도로 왼쪽으로 평행이동
             transform.Translate(Vector2.left * speed * Time.deltaTime);
